@@ -1,0 +1,113 @@
+<odoo>
+    <data>
+        <record id="paperformat_euro_test" model="report.paperformat">
+            <field name="name">A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="purchase_request_data_report" model="ir.actions.report">
+            <field name="name">Purchase Request Full Data Report</field>
+            <field name="model">purchase.request</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">purchase_request.report_purchase_request</field>
+            <field name="report_file">purchase_request.report_purchase_request</field>
+            <field name="paperformat_id" ref="paperformat_euro_test"/>
+        </record>
+
+        <template id="report_purchase_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <div class="logo">
+                            <img src="/purchase_request/static/src/img/icon.png"
+                                 style="height: 100px; width: 100px;" alt="logo"/>
+                        </div>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h2>Purchase Request Data Report</h2>
+                                </div>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Request Name</td>
+                                                <td>
+                                                    <t t-esc="o.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sequence</td>
+                                                <td>
+                                                    <t t-esc="o.sequence"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Requested by</td>
+                                                <td>
+                                                    <t t-esc="o.requested_by.partner_id.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Buyer</td>
+                                                <td>
+                                                    <t t-esc="o.vendor_id.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Start Date</td>
+                                                <td>
+                                                    <t t-esc="o.start_date"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>End Date</td>
+                                                <td>
+                                                    <t t-esc="o.end_date"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--<div class="footer">
+                                <p>Total:
+                                    <t t-esc="o.total_price"/>
+                                </p>
+                            </div>-->
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

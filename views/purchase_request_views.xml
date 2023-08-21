@@ -27,7 +27,7 @@
                         <button name="approve" string="Approve" type="object" class="btn-primary"
                                 states="to_be_approved"/>
                         <button name="create_po" string="create PO" type="object" class="btn-primary"
-                                states="approve"/>
+                                attrs="{'invisible': ['|',('po_active', '=', False),('state','!=','approve')]}"/>
                         <button name="reject" string="Reject" type="object"
                                 class="btn-secondary" states="to_be_approved"/>
                         <button name="reset_to_draft" string="Reset to draft" type="object"
@@ -35,6 +35,19 @@
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_orders"
+                                    attrs="{'invisible': [('orders_count', '=', 0)]}"
+                                    class="oe_stat_button"
+                                    type="object" icon="fa-list-ul">
+                                <div class="o_stat_info o_field_widget">
+                                    <span class="oe_stat_value">
+                                        <field name="orders_count" class="oe_stat_value"/>
+                                    </span>
+                                    <span class="o_stat_text">Purchase Orders</span>
+                                </div>
+                            </button>
+                        </div>
                         <div class="oe_title">
                             <span class="o_form_label">Purchase Request No.</span>
                             <h1 class="d-flex">
@@ -53,6 +66,7 @@
                                        attrs="{'readonly': [('state', 'in', ('approve', 'cancel', 'reject'))]}"/>
                                 <field name="end_date"
                                        attrs="{'readonly': [('state', 'in', ('approve', 'cancel', 'reject'))]}"/>
+                                <field name="po_active" invisible="1"/>
                             </group>
                         </group>
                         <notebook>
@@ -94,6 +108,20 @@
             <field name="prefix">DM</field>
             <field name="padding">5</field>
         </record>
+
+        <!--        <record id="action_purchase_order_tree" model="ir.actions.act_window">-->
+        <!--            <field name="name">Purchase Orders</field>-->
+        <!--            <field name="res_model">purchase.order</field>-->
+        <!--            <field name="view_mode">tree,form</field>-->
+        <!--            <field name="domain">[('purchase_request_id', '=', active_id)]</field>-->
+        <!--            <field name="context">{'search_default_group_by_partner_id': 1}</field>-->
+        <!--            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>-->
+        <!--            <field name="help" type="html">-->
+        <!--                <p class="oe_view_nocontent_create">-->
+        <!--                    Click the Create button to create a new purchase order.-->
+        <!--                </p>-->
+        <!--            </field>-->
+        <!--        </record>-->
 
         <record id="purchase_request_action" model="ir.actions.act_window">
             <field name="name">All Purchase Requests</field>

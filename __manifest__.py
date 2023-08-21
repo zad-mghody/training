@@ -18,6 +18,7 @@
         'wizard/reject_request_views.xml',
         'views/purchase_request_views.xml',
         'views/purchase_request_lines_views.xml',
+        'reports/purchase_request_report.xml',
     ],
     'demo': [],
     'installable': True,

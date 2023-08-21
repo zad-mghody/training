@@ -9,6 +9,7 @@
                     <field name="product_id"/>
                     <field name="description"/>
                     <field name="quantity"/>
+                    <field name="remaining_qty"/>
                     <field name="cost_price"/>
                     <field name="total"/>
                 </tree>
